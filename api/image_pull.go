@@ -11,7 +11,7 @@ import (
 )
 
 // ImagePull pulls a image from a remote location to local storage
-func (c *API) ImagePull(ctx context.Context, nameWithTag string, auth ImageAuthConfig) (string, error) {
+func (c *API) ImagePull(ctx context.Context, nameWithTag string, auth ImageAuthConfig, tls_verify bool) (string, error) {
 	var id string
 	headers := map[string]string{}
 
@@ -24,7 +24,7 @@ func (c *API) ImagePull(ctx context.Context, nameWithTag string, auth ImageAuthC
 		headers["X-Registry-Auth"] = authHeader
 	}
 
-	res, err := c.PostWithHeaders(ctx, fmt.Sprintf("/v1.0.0/libpod/images/pull?reference=%s", nameWithTag), nil, headers)
+	res, err := c.PostWithHeaders(ctx, fmt.Sprintf("/v1.0.0/libpod/images/pull?reference=%s&tlsVerify=%t", nameWithTag, tls_verify), nil, headers)
 	if err != nil {
 		return "", err
 	}

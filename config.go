@@ -58,6 +58,10 @@ var (
 		"working_dir":    hclspec.NewAttr("working_dir", "string", false),
 		"hostname":       hclspec.NewAttr("hostname", "string", false),
 		"image":          hclspec.NewAttr("image", "string", true),
+		"tls_verify": hclspec.NewDefault(
+			hclspec.NewAttr("tls_verify", "bool", false),
+			hclspec.NewLiteral(`true`),
+		),
 		"image_pull_timeout": hclspec.NewDefault(
 			hclspec.NewAttr("image_pull_timeout", "string", false),
 			hclspec.NewLiteral(`"5m"`),
@@ -146,6 +150,7 @@ type TaskConfig struct {
 	PortMap           hclutils.MapStrInt `codec:"port_map"`
 	Sysctl            hclutils.MapStrStr `codec:"sysctl"`
 	Ulimit            hclutils.MapStrStr `codec:"ulimit"`
+	Tls_verify        bool               `codec:"tls_verify"`
 	CPUHardLimit      bool               `codec:"cpu_hard_limit"`
 	Init              bool               `codec:"init"`
 	Tty               bool               `codec:"tty"`
